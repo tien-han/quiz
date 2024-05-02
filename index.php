@@ -45,8 +45,6 @@
 
     //Miterm Summary route
     $f3-> route('GET /summary', function($f3) {
-        var_dump($f3->get('SESSION'));
-
         //Render a view page
         $view = new Template();
         echo $view->render('views/summary.html');
