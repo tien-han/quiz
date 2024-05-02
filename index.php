@@ -26,12 +26,30 @@
     });
 
     $f3-> route('GET|POST /survey', function($f3) {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $name = $_POST['name'];
+            $f3->set('SESSION.name', $name);
+            $survey = implode(", ", $_POST['survey']);
+            $f3->set('SESSION.surveyItems', $survey);
+
+            $f3->reroute('summary');
+        }
+
         $survey = getSurveyItems();
         $f3->set('surveyItems', $survey);
 
         //Render a view page
         $view = new Template();
         echo $view->render('views/midterm-survey.html');
+    });
+
+    //Miterm Summary route
+    $f3-> route('GET /summary', function($f3) {
+        var_dump($f3->get('SESSION'));
+
+        //Render a view page
+        $view = new Template();
+        echo $view->render('views/summary.html');
     });
 
     //Run Fat-Free
