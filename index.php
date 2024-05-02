@@ -13,6 +13,7 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
+    require_once('model/data-layer.php');
 
     //Instantiate the F3 Base class (Fat-Free)
     $f3 = Base::instance();
@@ -24,10 +25,13 @@
         echo $view->render('views/homepage.html');
     });
 
-    $f3-> route('GET /midterm-survey', function() {
+    $f3-> route('GET|POST /survey', function($f3) {
+        $survey = getSurveyItems();
+        $f3->set('surveyItems', $survey);
+
         //Render a view page
         $view = new Template();
-        echo $view->render('views/survey.html');
+        echo $view->render('views/midterm-survey.html');
     });
 
     //Run Fat-Free
